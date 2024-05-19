@@ -10,7 +10,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@tensorflow/tfjs": "^4.19.0",
     "express": "^4.19.2"
   }
 }

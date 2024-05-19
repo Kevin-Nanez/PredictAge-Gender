@@ -1,15 +1,20 @@
+## Se ocupa correr en WSL ubuntu con el comando 
+##cd mnt/c/Users/Kevin/OneDrive/Escritorio/Seminario De sistemas/model
+## python3 trainModel.py
 import tensorflow as tf
 from tensorflow.keras import layers, models
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import tensorflowjs as tfjs
+
 
 # Definir parámetros
-batch_size = 512
-epochs = 10
+batch_size = 256
+epochs = 1
 image_height = 200
 image_width = 200
 
 # Directorio de los datos
-train_dir = r'C:\Users\Kevin\OneDrive\Escritorio\Dataset\face_age'
+train_dir = '/mnt/c/Users/Kevin/OneDrive/Escritorio/Dataset/face_age'
 
 # Preprocesamiento de datos y aumento de datos
 train_datagen = ImageDataGenerator(
@@ -55,7 +60,7 @@ model = models.Sequential([
     layers.Flatten(),
     layers.Dropout(0.5),
     layers.Dense(512, activation='relu'),
-    layers.Dense(68, activation='softmax') 
+    layers.Dense(69, activation='softmax') 
 ])
 
 # Compilar el modelo
@@ -84,4 +89,7 @@ label_mapping = {v: k for k, v in class_indices.items()}
 print(label_mapping)
 
 # Guardar el modelo entrenado
-model.save('modelo_de_reconocimiento_de_edad.keras')
+model.save('edad.h5')
+
+# Convertir el modelo a TensorFlow.js
+tfjs.converters.save_keras_model(model, 'tfjs_model')
